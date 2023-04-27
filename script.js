@@ -111,7 +111,11 @@ form.addEventListener("submit", (event) => {
     validatePassword(password.value) &&
     validatePasswordsMatch(password.value, retypePassword.value)
   ) {
-    alert("Form submitted successfully!");
+    
+    $.post( "form.php", $( "#form" ).serialize() )
+      .done(function( data ) {
+        alert( data );
+      });
   } else {
     alert("Please fix the errors in the form.");
   }
