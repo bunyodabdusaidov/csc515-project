@@ -22,7 +22,6 @@ $stateAbbreviations = [
 
 $nameRegex = "/^[a-zA-Z']{3,8}$/";
 $mobileRegex = "/^\d{3}-\d{3}-\d{4}$/";
-//$emailRegex = "/^[a-zA-Z][\w-'.]*@[a-zA-Z]+(\.[a-zA-Z]+){1,2}$/";
 $passwordRegex = "/^[a-zA-Z][a-zA-Z0-9]{5,}$/";
 
 // Revalidate input
@@ -66,11 +65,6 @@ function send_form_data() {
 
     $sql = "INSERT INTO user (firstname, lastname, mobile, email, city, state, password)
             VALUES(?, ?, ?, ?, ?, ?, ?)";
-    // $stmt = $conn->prepare($sql);
-    // $stmt->bind_param("ssissss", $firstName, $lastName, $mobile, $email, $city, $state, $passwordHash);
-    // $execval = $stmt->execute();
-
-    // return $execval;
 
     $stmt = mysqli_stmt_init($conn);
 
