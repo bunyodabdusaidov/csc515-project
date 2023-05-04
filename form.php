@@ -53,7 +53,7 @@ function send_form_data() {
 
     // Database Connection
     $host = "localhost";
-    $dbname = "registration_form";
+    $dbname = "";
     $username = "root";
     $dbpass = "";
 
@@ -63,6 +63,33 @@ function send_form_data() {
         die("Connection error: " . mysqli_connect_error());
     }
 
+    // Create database
+    $sql = "CREATE DATABASE IF NOT EXISTS registration_form";
+    if (!mysqli_query($conn, $sql)) {
+        echo "Error creating database: " . mysqli_error($conn);
+    }
+
+    // enter database
+    mysqli_select_db ( $conn , "registration_form" );
+
+    // Create Tables if not exist
+    $sql = "CREATE TABLE IF NOT EXISTS user (
+        id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        firstname VARCHAR(255) NOT NULL,
+        lastname VARCHAR(255) NOT NULL,
+        mobile BIGINT(20) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        city VARCHAR(255) NOT NULL,
+        state VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )";
+
+    if (!mysqli_query($conn, $sql)) {
+        echo "Error creating table: " . mysqli_error($conn);
+    }
+
+    // Insert the posted values
     $sql = "INSERT INTO user (firstname, lastname, mobile, email, city, state, password)
             VALUES(?, ?, ?, ?, ?, ?, ?)";
 
@@ -93,6 +120,9 @@ function init() {
         } else {
             echo 'Something went wrong';
         }
+    }
+    else {
+        echo 'Validation of data failed. Please check your inputs.';
     }
 }
 
